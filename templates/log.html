@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% block title %}Log -- My Practice Pal{% endblock %}
+
+{% block body %}
+
+
+<div class="container row d-flex justify-content-center"">
+    <div class="col-md-8 col-xs-12">
+        <h1>Practice Log 🪵</h1><br>
+        <h3>What did you practice today in your {{ routine.title }} routine? </h3>
+
+        <form action="/log" method = "POST">
+                
+            <fieldset>
+                <section>
+
+                    <label for="date">*Practice Date:</label>
+                        <input type="datetime" name="date" id="date" required/>
+                    <label for="session_min">*Duration (minutes):</label>
+                        <input type="number" min="1" max="1440" name="session_min" id="session_min" required/>
+                    <p class="small_text">* Required</p>
+                </section>
+
+                <section>
+                    <label for="on_instrument_min">On Instrument:</label>
+                        <input type="number" min="1" max="1440" name="on_instrument_min" id="on_instrument_min" />
+                    <label for="add_time_off_inst">Off Instrument</label>
+                        <input type="number" min="1" max="1440" name="off_instrument_min" id="off_instrument_min" />
+                    <label for="general_min">Check box if logging time only, not exercises:</label>
+                        <input type="checkbox" value="general_min_only" id="general_min_check">
+                </section>
+                <br>
+            <p>
+                <input name="routine_id" value="{{ routine.routine_id }}" hidden/>
+                    <h3>Choose the exercises you did in your {{ routine.title }} routine:</h3><br>
+
+                    
+                    {% for exercise in routine.exercises.split("|") %}
+                        <input type="checkbox" name="exercise" value="{{ exercise }}">&nbsp;EXERCISE:&nbsp;{{ exercise }}</input><br>
+
+                        
+                        <span class="indent"><label for="key_variation">🔑&nbsp;Keys Practiced</label></span><br>
+                        <span class="indent">{% for key in list_of_maj_keys %} 
+                        <input type="checkbox" name="key_variation" value="{{ key }}|{{ exercise }}"><span class="larger_text">{{ key }}</span></input>
+                        {% endfor %}
+                        </span>
+                        <br><br>
+                        
+                        
+                        <span class="indent">🎭&nbsp;Modes Practiced</span><br>
+                        <span class="indent">
+                                {% for mode in mode_library %}  
+                                <input type="checkbox" value="{{ mode }}|{{ exercise }}" name="mode" class="music_mode_checkboxes" id="{{ mode }}">&nbsp;{{ mode }}&nbsp;</input>
+                                {% endfor %} 
+                            <br><br>
+                            
+                            <!-- This is a new as of 2/28: -->
+                            <span class="indent">
+                                <label for="tempo">🥁&nbsp;Tempo (bpm)</label>
+                            </span>
+                                <input type="number" name="tempo" value="Null" id="tempo" min="1" max="500">
+
+                            <br><br>
+                            <span class="indent">
+                                <label for="direction">↔️&nbsp;Direction</label><br>
+                            </span>
+                                <span class="indent"><input type="checkbox" name="direction" value="Forwards" id="dir_forwrds">&nbsp;Forwards&nbsp;
+                                <input type="checkbox" name="direction" value="Backwards" id="dir_backwards">&nbsp;Backwards&nbsp;
+                                <input type="checkbox" name="direction" value="Ascending" id="dir_ascending">&nbsp;Ascending&nbsp;
+                                <input type="checkbox" name="direction" value="Backwards" id="dir_descending">&nbsp;Descending&nbsp;
+                                </span>
+                                <br><br>
+                    {% endfor %}
+                        </span>
+                </section>
+                <br>
+            </p>
+                <section>
+
+                <div class="content">Select all that apply:
+                        <p>BPM</p>
+                        <p>Direction</p>
+                        <p>My Variations</p>
+                        <p>Difficulty Rating</p>
+                        <label for="exercise_difficulty">How difficult does this exercise feel?</label>
+                            <select name="session_difficulty">
+                                <option value="">(select)</option>
+                                <option value="easy">Easy Street!</option>
+                                <option value="ok">Ok</option>
+                                <option value="somewhat-challenging">Some challenge</option>
+                                <option value="extremely-difficult">Extreme challenge</option>
+                            </select>
+                    </div>
+                        
+                </section>
+
+
+                <section>
+                    <label for="session_difficulty">How difficult was this practice session?</label>
+                        <select name="session_difficulty">
+                            <option value="">(select)</option>
+                            <option value="easy">Easy Street!</option>
+                            <option value="ok">Ok</option>
+                            <option value="somewhat-challenging">Some challenge</option>
+                            <option value="extremely-difficult">Extreme challenge</option>
+                        </select>
+                </section><br>
+
+                <section>
+                    <label for="session_enjoyment">How much did you enjoy your practice today?
+                        <select name="session_enjoyment" id="session_enjoyment">
+                            <option value="">(select)</option>
+                            <option value="disliked">disliked</option>
+                            <option value="neutral">neutral</option>
+                            <option value="liked">liked</option>
+                            <option value="loved">loved</option>
+                        </select>
+                    </label>
+                </section><br>
+
+                <section>
+                    <label for="notes_for_practice">Notes for next practice:
+                        <textarea name="notes_next_practice" id="notes_next_practice" placeholder="Next practice..."></textarea>
+                    </label>
+                </section>
+
+                <section>
+                    <label for="questions_teacher">Questions for teacher:</label>
+                    <textarea id="questions_teacher" placeholder="Ask teacher about..."></textarea>
+                </section>
+                <br>
+            </fieldset>
+                <label for="submit">Save Practice Session to My Log:</label>
+                <input type="submit" value="Submit" name="submit" id="submit"/>
+        </form>
+        <br><br>
+    </div>
+
+    <div class="col-md-4 col-xs-12 squish_down">
+        <h2>About Tracking:<br> Tempo, Key, Mode, & Mood</h2>
+        <p>🏆 My Practice Pal can help coach you to greatness&nbsp;🏆</p> 
+            <ul class="collapsible">+ 💡 Tips: </ul>
+                <li>👀 See your progress: add details, like key and mode, for exercises you want to master 💯 </li>
+                <li>🥁 Tempo: Each time you log a session, include the highest tempo you reached for an exercise (aim for complete and correct but also, challenging)</li>
+                <li>😑 Bored? Speed it up. Frustrated? Good sign. It means you're trying!</li>
+                <li>😩 Not progressing over time? Slow down and build your tempo and confidence slowly, adding 2 or 3 bpm as you build skill 🐢</li>
+                <li>⏭ Can you skip the details? Sure! Sometimes you won't want to log details (e.g., you don't plan to practice that ballad at 200 bpm)</li>
+    </div>
+
+
+
+    <div class="row">
+        <h1>Recently Logged Practice Sessions</h1>
+
+        {% for session in practice_sessions %} 
+
+        <h2>Session from: {{ session.date }}</h2>
+
+        <h4>Exercises this session:</h4>
+
+            {% if session.exercises_this_session %} 
+
+                {% for exercise in session.exercises_this_session %}
+                
+                <p>{{ exercise }}
+                    {{ exercise.bpm }}
+                    {{ exercise.key_variations }}
+                    {{ exercise.mode_variations }}
+                </p>
+                
+                {% endfor %}
+
+            {% else %}
+
+                <p>No exercises</p>
+
+            {% endif %} 
+
+        {% endfor %}
+    </div>
+</div>
+
+
+
+{% endblock %}
