@@ -58,7 +58,7 @@ class PracticeSession(db.Model):  ###A specific meal order
     session_enjoyment_level = db.Column(db.String, nullable=True)
     notes_next_practice = db.Column(db.String, nullable=True)
     questions_for_teacher = db.Column(db.String, nullable=True)
-    exercises_this_session = db.relationship("Exercise", back_populates="practice_session")  
+    exercises_this_session = db.relationship("Exercise", back_populates="practice_session")
     # exercises_this_session = db.Column(db.String, nullable=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))

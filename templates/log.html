@@ -15,7 +15,7 @@
                 <section>
 
                     <label for="date">*Practice Date:</label>
-                        <input type="datetime" name="date" id="date" required/>
+                        <input type="date" name="date" id="date" required/>
                     <label for="session_min">*Duration (minutes):</label>
                         <input type="number" min="1" max="1440" name="session_min" id="session_min" required/>
                     <p class="small_text">* Required</p>
@@ -162,7 +162,7 @@
 
                 {% for exercise in session.exercises_this_session %}
                 
-                <p>{{ exercise }}
+                <p class="indent">{{ exercise }}
                     {{ exercise.bpm }}
                     {{ exercise.key_variations }}
                     {{ exercise.mode_variations }}
@@ -176,10 +176,27 @@
 
             {% endif %} 
 
+
+            <h4>Time this session:</h4>
+            <p class="indent">{{ session.total_session_min }} minutes: 
+                {% if session.on_instrument_min %} 
+                    {{ session.on_instrument_min }} on instrument
+                {% endif %}
+                
+                {% if session.off_instrument_min %}
+                    {{ session.off_instrument_min }} off instrument 
+                {% endif %}
+
+            </p>
         {% endfor %}
+
+
     </div>
 </div>
 
 
 
 {% endblock %}
+
+
+

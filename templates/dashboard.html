@@ -1,4 +1,5 @@
 {% extends 'base.html' %} 
+from model import Routine, User, Exercise, PracticeSession, db
 
 {% block title %}User Dashboard{% endblock %}
 
@@ -34,6 +35,7 @@
         </form>
     </div>
     </div>
+
 </div>
 {% endblock %}
 

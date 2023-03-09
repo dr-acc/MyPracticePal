@@ -1,4 +1,6 @@
 from flask import Flask, render_template, redirect, request, flash, session
+from flask_sqlalchemy import SQLAlchemy
+# I added the statement above as part of debugging; it worked
 import jinja2
 from model import Routine, User, Exercise, PracticeSession, db
 from crud import last_two_sessions, get_user_by_id
@@ -143,7 +145,7 @@ def log_practice_session():
     routine = Routine.query.filter(Routine.routine_id == routine_id).first()
 
 
-    session_min = int(request.form.get("session_minutes", 0))
+    session_min = int(request.form.get("session_min", 0))
     on_instrument_min = request.form.get("on_instrument_min")
     if not on_instrument_min:
         on_instrument_min = None

@@ -60,7 +60,7 @@ def create_exercise(user, routine, exercise):
 def last_two_sessions(user_id):
     """Return the 2 most recent PracticeSessions of the user"""
 
-    return PracticeSession.query.filter_by(user_id=user_id).order_by(PracticeSession.session_id.desc()).limit(2).all()
+    return PracticeSession.query.filter_by(user_id=user_id).order_by(PracticeSession.session_id.desc()).limit(20).all()
 
 
 # def update_routine():
