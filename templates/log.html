@@ -150,43 +150,63 @@
 
 
     <div class="row">
-        <h1>Recently Logged Practice Sessions</h1>
+        <h1>📅 Recently Logged Practice Sessions </h1>
 
         {% for session in practice_sessions %} 
-
+    
+        <br><br>
         <h2>Session from: {{ session.date }}</h2>
 
-        <h4>Exercises this session:</h4>
+        <h4>🎹 Exercises this session:</h4>
 
             {% if session.exercises_this_session %} 
 
                 {% for exercise in session.exercises_this_session %}
                 
-                <p class="indent">{{ exercise }}
-                    {{ exercise.bpm }}
-                    {{ exercise.key_variations }}
-                    {{ exercise.mode_variations }}
+                <p class="indent">{{ exercise }}&nbsp;&nbsp;
+                    🥁&nbsp; {{ exercise.bpm }} &nbsp;&nbsp;
+                    🔑&nbsp;{{ exercise.key_variations }}&nbsp;&nbsp;
+                    🎭&nbsp;{{ exercise.mode_variations }}&nbsp;&nbsp;
+                    ↔️&nbsp;{{ exercise.direction_variations }}&nbsp;&nbsp;
                 </p>
                 
                 {% endfor %}
 
             {% else %}
 
-                <p>No exercises</p>
+                <p class="indent">No exercises</p>
 
             {% endif %} 
 
 
-            <h4>Time this session:</h4>
-            <p class="indent">{{ session.total_session_min }} minutes: 
+            <h4>⏰&nbsp; Time this session:</h4>
+            <p class="indent">{{ session.total_session_min }} minutes
                 {% if session.on_instrument_min %} 
-                    {{ session.on_instrument_min }} on instrument
+                    &nbsp;&nbsp;{{ session.on_instrument_min }} on instrument
                 {% endif %}
                 
                 {% if session.off_instrument_min %}
-                    {{ session.off_instrument_min }} off instrument 
+                    &nbsp;&nbsp;{{ session.off_instrument_min }} off instrument 
+                {% endif %}
+            </p>
+
+            <h4>🪞 Reflections:</h4>
+            <p class="indent">
+                {% if session.session_enjoyment_level %}
+                    💚 Session enjoyment: {{ session.session_enjoyment_level }}&nbsp;&nbsp;
                 {% endif %}
 
+                {% if session.session_challenge_level %}
+                    📈 Session challenge: {{ session.session_challenge_level }}&nbsp;&nbsp;
+                {% endif %}
+
+                {% if session.notes_next_practice %}
+                    📝 Notes for next time: {{ session.notes_next_practice }}&nbsp;&nbsp;
+                {% endif %}
+
+                {% if session.notes_next_practice %}
+                ❔ Questions: {{ session.questions_for_teacher }}&nbsp;&nbsp;
+                {% endif %}
             </p>
         {% endfor %}
 
